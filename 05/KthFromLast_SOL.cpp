@@ -42,15 +42,18 @@ Node* KthFromLast(Node* head, int k)
     Node* slow = head;
     Node* fast = head;
 
-    // move fast k steps forward (assumes k is valid)
-    for (int i = 0; i < k; i++)
-        fast = fast->next;
-    
-    // move one step at a time until fast is null
     while (fast)
     {
-        slow = slow->next;
-        fast = fast->next;
+        if (k > 0)
+        {
+            fast = fast->next;
+            k = k - 1;
+        }
+        else
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
     }
 
     return slow;
