@@ -12,6 +12,7 @@ struct adjVertex{
 
 struct vertex{
     std::string name;
+    bool visited = false;
     std::vector<adjVertex> adj;
 };
 
@@ -23,9 +24,15 @@ class Graph
         void removeEdge(std::string v1, std::string v2, bool verbose=true);
         void removeVertex(std::string v, bool verbose=true);
 
+        void breadthFirstTraverse_iterative(std::string sourceVertex);
+        void breadthFirstTraverse_recursive(std::string sourceVertex);
+        void depthFirstTraverse_iterative(std::string sourceVertex);
+        void depthFirstTraverse_recursive(std::string sourceVertex);
+
         bool edgeExists(std::string s1, std::string s2);
         void displayEdges();
         vertex* findVertexPointer(std::string toFind);
+        void setVisitedFalse();
 
     private:
         std::vector<vertex*> vertices;
