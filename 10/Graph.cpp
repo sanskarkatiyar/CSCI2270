@@ -218,10 +218,7 @@ void Graph::dijkstra_shortest_path_priority_queue(string sourceVertex){
     setDistanceInfinity(vStart); // except this node set all distance to INF, prev to NULL
 
     priority_queue<vertex*, vector<vertex*>, CompareDistance> Q;  // create a priority_queue to keep track of unvisited nodes
-    for(int i = 0; i < vertices.size(); i++) {
-        vertex* tmp = vertices.at(i);
-        Q.push(tmp);
-    }
+    Q.push(vStart);   
 
     cout << "[Dijkstra's PQ (source: " << vStart->name << ")] " << endl;
     while(!Q.empty()) {
@@ -233,6 +230,7 @@ void Graph::dijkstra_shortest_path_priority_queue(string sourceVertex){
             if ((ver->distance + ver->adj[j].weight) < ver->adj[j].v->distance) {
                 ver->adj[j].v->distance = ver->distance + ver->adj[j].weight;
                 ver->adj[j].v->prev = ver;
+                Q.push(ver->adj[j].v);   // if the value is updated, then push in the pq
             }
         }
     }
@@ -294,6 +292,7 @@ void Graph::dijkstra_shortest_path_pointer(string sourceVertex){
         Q.erase(Q.begin() + minidx); // delete from the Q
         ver->visited = true;
 
+        // Go over each neighbor
         for(int j = 0; j < ver->adj.size(); j++) {
             if ((ver->distance + ver->adj[j].weight) < ver->adj[j].v->distance) {
                 ver->adj[j].v->distance = ver->distance + ver->adj[j].weight;
@@ -302,6 +301,7 @@ void Graph::dijkstra_shortest_path_pointer(string sourceVertex){
         }
     }
 
+    // Trace the path
     stack<string> s;
     for(int i = 0; i < vertices.size(); i++) {
         // for disconnected components
